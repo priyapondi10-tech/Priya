@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "mode": "paper",
+  "live_trading_enabled": false,
+  "capital": {
+    "initial_capital": null,
+    "currency": null
+  },
+  "position_limits": {
+    "max_position_value": null,
+    "max_position_pct": null,
+    "max_open_positions": null
+  }
+}
