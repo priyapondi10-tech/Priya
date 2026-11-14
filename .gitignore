@@ -22,3 +22,16 @@ results/
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Private market data, model artifacts, and build products
+data/
+artifacts/
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.lock
+*.egg-info/
+.ruff_cache/
+build/
+dist/
