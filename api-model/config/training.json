@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "bar_interval": "1d",
+  "horizon_bars": 1,
+  "warmup_bars": 60,
+  "train_fraction": 0.7,
+  "validation_fraction": 0.15,
+  "ridge_alphas": [
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "minimum_train_rows": 120,
+  "minimum_validation_rows": 30,
+  "minimum_test_rows": 30,
+  "max_source_rows": 2000000,
+  "max_data_age_days": 7,
+  "gate": {
+    "maximum_test_mae_ratio": 1.0,
+    "minimum_test_directional_accuracy": 0.5
+  },
+  "baseline": {
+    "minimum_entry_forecast_return": 0.002,
+    "execution": "next_event",
+    "force_flat_at_end": false
+  }
+}

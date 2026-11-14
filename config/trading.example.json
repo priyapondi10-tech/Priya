@@ -1,14 +1,39 @@
 {
-  "schema_version": 1,
+  "$schema": "../api-model/src/api_model/schemas/trading.json",
+  "schema_version": 2,
   "mode": "paper",
   "live_trading_enabled": false,
   "capital": {
-    "initial_capital": null,
-    "currency": null
+    "initial_capital": 100000,
+    "currency": "USD",
+    "max_deployed_pct": 25,
+    "max_deployed_value": 25000
   },
   "position_limits": {
-    "max_position_value": null,
-    "max_position_pct": null,
-    "max_open_positions": null
+    "max_position_pct": 5,
+    "max_position_value": 5000
+  },
+  "asset_policy": {
+    "allowed_symbols": [],
+    "asset_class": "equity",
+    "allow_shorts": false,
+    "allow_leverage": false,
+    "fractional_shares": false
+  },
+  "execution": {
+    "commission_bps": 5,
+    "slippage_bps": 5,
+    "max_quote_age_seconds": 60,
+    "reservation_ttl_seconds": 60,
+    "exchange_calendar": "XNYS"
+  },
+  "profit_protection": {
+    "enabled": true,
+    "pullback_min_pct": 1.0,
+    "pullback_max_pct": 1.5,
+    "above_entry_only": true,
+    "reference": "regular_session_daily_high",
+    "order_type": "market",
+    "gap_policy": "strict_band"
   }
 }
