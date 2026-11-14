@@ -1,0 +1,44 @@
+name: Historical market learning
+
+on:
+  schedule:
+    - cron: '15 22 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: market-learning-main
+  cancel-in-progress: false
+
+jobs:
+  train-candidate:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || vars.ENABLE_AUTOMATED_TRAINING == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MARKET_DATABASE_URL: ${{ secrets.MARKET_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: api-model/pyproject.toml
+      - name: Install research pipeline
+        run: python -m pip install -e './api-model[dev]'
+      - name: Validate configuration and source contracts
+        run: |
+          api-model validate-config
+          python scripts/validate_repository.py
+      - name: Retrain on completed historical bars and archive candidate
+        run: api-model train --output results/training --source-commit "$GITHUB_SHA"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: learned-parameters-${{ github.run_id }}-${{ github.run_attempt }}
+          path: results/training/
+          if-no-files-found: error
+          retention-days: 30
